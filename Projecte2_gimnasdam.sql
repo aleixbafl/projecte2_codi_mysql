@@ -1,0 +1,96 @@
+CREATE TABLE `Monitor` (
+	`DNI_M` TEXT NOT NULL,
+	`ID_S` INT NOT NULL,
+	`nom` TEXT NOT NULL,
+	`cognom` TEXT NOT NULL,
+	`telefon` INT NOT NULL,
+	`correuelectronic` TEXT NOT NULL,
+	`data_naixe` TIMESTAMP NOT NULL,
+	`salari` INT NOT NULL,
+	PRIMARY KEY (`DNI_M`)
+);
+
+CREATE TABLE `Sales` (
+	`ID_S` INT NOT NULL AUTO_INCREMENT,
+	`nom` TEXT NOT NULL,
+	`descripcio` TEXT NOT NULL,
+	`aforament_maxim` INT NOT NULL,
+	PRIMARY KEY (`ID_S`)
+);
+
+CREATE TABLE `Activitats` (
+	`ID_A` INT NOT NULL AUTO_INCREMENT,
+	`ID_S` INT NOT NULL AUTO_INCREMENT,
+	`descripcio` TEXT NOT NULL,
+	`durada` TIME NOT NULL,
+	PRIMARY KEY (`ID_A`)
+);
+
+CREATE TABLE `Horari` (
+	`ID_H` INT NOT NULL AUTO_INCREMENT,
+	`ID_A` INT NOT NULL AUTO_INCREMENT,
+	`h_inici` TIME NOT NULL,
+	`h_fi` TIME NOT NULL,
+	`dia` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`ID_H`)
+);
+
+CREATE TABLE `Individual` (
+	`ID_A` INT NOT NULL
+);
+
+CREATE TABLE `Colectiva` (
+	`ID_A` BINARY NOT NULL
+);
+
+CREATE TABLE `Client` (
+	`DNI_C` TEXT NOT NULL,
+	`nom` TEXT NOT NULL,
+	`cognom` TEXT NOT NULL,
+	`nom_usuari` TEXT NOT NULL,
+	`compte_banc` TEXT NOT NULL,
+	`telefon` INT NOT NULL,
+	`data_naxe` INT NOT NULL,
+	`correu_electro` TEXT NOT NULL,
+	PRIMARY KEY (`DNI_C`)
+);
+
+CREATE TABLE `Curses` (
+	`ID_Cur` INT NOT NULL AUTO_INCREMENT,
+	`DNI_C` TEXT NOT NULL,
+	`titol` TEXT NOT NULL,
+	PRIMARY KEY (`ID_Cur`)
+);
+
+CREATE TABLE `Reserva` (
+	`Id_Reserva` INT NOT NULL AUTO_INCREMENT,
+	`DNI_C` TEXT NOT NULL,
+	`hora` TIME NOT NULL,
+	`data` TIMESTAMP NOT NULL,
+	`cancelada` BOOLEAN NOT NULL,
+	PRIMARY KEY (`Id_Reserva`)
+);
+
+ALTER TABLE `Monitor` ADD CONSTRAINT `Monitor_fk0` FOREIGN KEY (`ID_S`) REFERENCES `Sales`(`ID_S`);
+
+ALTER TABLE `Activitats` ADD CONSTRAINT `Activitats_fk0` FOREIGN KEY (`ID_S`) REFERENCES `Sales`(`ID_S`);
+
+ALTER TABLE `Horari` ADD CONSTRAINT `Horari_fk0` FOREIGN KEY (`ID_A`) REFERENCES `Activitats`(`ID_A`);
+
+ALTER TABLE `Individual` ADD CONSTRAINT `Individual_fk0` FOREIGN KEY (`ID_A`) REFERENCES `Activitats`(`ID_A`);
+
+ALTER TABLE `Colectiva` ADD CONSTRAINT `Colectiva_fk0` FOREIGN KEY (`ID_A`) REFERENCES `Activitats`(`ID_A`);
+
+ALTER TABLE `Curses` ADD CONSTRAINT `Curses_fk0` FOREIGN KEY (`DNI_C`) REFERENCES `Client`(`DNI_C`);
+
+ALTER TABLE `Reserva` ADD CONSTRAINT `Reserva_fk0` FOREIGN KEY (`DNI_C`) REFERENCES `Client`(`DNI_C`);
+
+
+
+
+
+
+
+
+
+
